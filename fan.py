@@ -75,13 +75,15 @@ def getCpuTemperature():
 def setFanSpeed(speed,temp):
     sbc.tx_pwm(fan , PWM_GPIO_NR, PWM_FREQ, speed, pulse_offset=0, pulse_cycles=0)
 
+    # print fan speed and temperature
     if VERBOSE == 1:
         print("fan speed: ",int(speed),"    temp: ",temp)
 
+    # write fan metrics to file for node-exporter/prometheus
     if NODE_EXPORTER == 1:
         # Save a reference to the original standard output
         original_stdout = sys.stdout 
-        with open('/var/lib/node_exporter/fan-metrics.tmp', 'w') as f:
+        with open('/var/lib/node_exporter/fan-metrics.prom', 'w') as f:
             # Change the standard output to the file we created.
             sys.stdout = f 
             print('raspberry_fan_speed ',speed)
@@ -96,7 +98,6 @@ def setFanSpeed(speed,temp):
             # Reset the standard output to its original value
             sys.stdout = original_stdout
             f.close()
-            os.popen('mv -f /var/lib/node_exporter/fan-metrics.tmp /var/lib/node_exporter/fan-metrics.prom')
 
     return()
 
