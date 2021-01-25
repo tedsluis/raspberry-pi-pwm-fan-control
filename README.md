@@ -16,8 +16,8 @@ To do so you can use a cooling fan with PWM ([Pulse Width Modulation](https://en
 * black: GND
 * blue: PWM
 
-[![fan speed graph raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-in-holder.png =250)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-in-holder.png)
-[![fan speed graph raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-and-holder.png =250)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-and-holder.png)
+[![fan in holder raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-in-holder.png)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-in-holder.png)
+[![fan and holder raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-and-holder.png)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-and-holder.png)
 
 
 PWM uses the width of the pulses to control the average voltage. Small pulses reduces the duty-cycle. Width pulses increases the duty-cycle.
