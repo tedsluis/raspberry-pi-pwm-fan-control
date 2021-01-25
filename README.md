@@ -16,6 +16,10 @@ To do so you can use a cooling fan with PWM ([Pulse Width Modulation](https://en
 * black: GND
 * blue: PWM
 
+[![fan speed graph raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-in-holder.png =250)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-in-holder.png)
+[![fan speed graph raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-and-holder.png =250)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-and-holder.png)
+
+
 PWM uses the width of the pulses to control the average voltage. Small pulses reduces the duty-cycle. Width pulses increases the duty-cycle.
 ```
                   ----------        ----------
@@ -60,6 +64,7 @@ Build contaner image that includes:
 REPOSITORY                         TAG     IMAGE ID      CREATED       SIZE
 localhost/gpio                     latest  62f18d7517ca  6 hours ago   926 MB
 ``` 
+[Podman](https://podman.io/) and Docker are interchangeable. Every where you see Podman or Docker, you can use the other. Read [here](https://podman.io/whatis.html) why you should use Podman over Docker.
 
 ## run container
 
@@ -114,8 +119,9 @@ raspberry_fan_wait_time  10
 raspberry_fan_pwm_gpio  18
 raspberry_fan_freq  10000
 ```
-This file is picked up bij node-exporter and send to prometheus. Using Grafana I created this graph:
+This file is picked up bij [node-exporter textfile collector](https://github.com/prometheus/node_exporter) and send to prometheus. Using Grafana I created this graph:
 [![fan speed graph raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-speed-temp.png)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-speed-temp.png)
+The fan speed follows the cpu temperature. The fan keeps the cpu below 65 celcius, while it was under full load.
 
 ## lgpio & rgpio
 
