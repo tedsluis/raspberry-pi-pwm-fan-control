@@ -99,6 +99,24 @@ run container with fan.py and node-exporter metrics (text file collector) for pr
 ```
 note: be sure you have node exporter installed. Metrics will be written in /var/lib/node_exporter
 
+## Fan metrics using node-exporter, prometheus and grafana
+
+When the --node-exporter parameter is used, the fan.py script writes the following metrics every interval in /var/lib/node_exporter/fan-metrics.prom:
+```
+[root@fed127 ~]# cat  /var/lib/node_exporter/fan-metrics.prom 
+raspberry_fan_speed  68.0
+raspberry_fan_temp  52.095
+raspberry_fan_min_temp  40
+raspberry_fan_max_temp  60
+raspberry_fan_fan_low  20
+raspberry_fan_fan_high  100
+raspberry_fan_wait_time  10
+raspberry_fan_pwm_gpio  18
+raspberry_fan_freq  10000
+```
+This file is picked up bij node-exporter and send to prometheus. Using Grafana I created this graph:
+[![fan speed graph raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/master/image/fan-speed-temp.png)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/master/image/fan-speed-temp.png)
+
 ## lgpio & rgpio
 
 I came across the lgpio python module and I found exactly what I needed to control the raspberry fan: tx_pwm
