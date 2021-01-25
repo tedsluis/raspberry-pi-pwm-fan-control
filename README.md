@@ -115,7 +115,7 @@ raspberry_fan_pwm_gpio  18
 raspberry_fan_freq  10000
 ```
 This file is picked up bij node-exporter and send to prometheus. Using Grafana I created this graph:
-[![fan speed graph raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/master/image/fan-speed-temp.png)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/master/image/fan-speed-temp.png)
+[![fan speed graph raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-speed-temp.png)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-speed-temp.png)
 
 ## lgpio & rgpio
 
