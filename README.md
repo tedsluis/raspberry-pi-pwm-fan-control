@@ -60,9 +60,11 @@ Build contaner image that includes:
 * fan.py, the python script that will control the fan speed (it only needs the lgpio python module).
 
 ```
+# git clone https://github.com/tedsluis/raspberry-pi-pwm-fan-control.git
+# cd raspberry-pi-pwm-fan-control
 # sudo podman build --tag gpio .
 
-# podman images
+# sudo podman images
 REPOSITORY                         TAG     IMAGE ID      CREATED       SIZE
 localhost/gpio                     latest  62f18d7517ca  6 hours ago   926 MB
 ``` 
