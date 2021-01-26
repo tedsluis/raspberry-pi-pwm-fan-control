@@ -60,7 +60,7 @@ Build contaner image that includes:
 * fan.py, the python script that will control the fan speed (it only needs the lgpio python module).
 
 ```
-# podman build --tag gpio .
+# sudo podman build --tag gpio .
 
 # podman images
 REPOSITORY                         TAG     IMAGE ID      CREATED       SIZE
@@ -69,9 +69,9 @@ localhost/gpio                     latest  62f18d7517ca  6 hours ago   926 MB
 
 ## run container
 
-run container with fan.py 
+### run container with fan.py 
 ```
-# podman run -it --rm --name gpioexperiment --device=/dev/gpiochip0 localhost/gpio /usr/bin/python /src/fan.py --verbose
+# sudo podman run -it --rm --name gpioexperiment --device=/dev/gpiochip0 localhost/gpio /usr/bin/python /src/fan.py --verbose
                                                                                                                                                                                                                                               
 MIN_TEMP: 40                    
 MAX_TEMP: 60                    
@@ -90,26 +90,41 @@ fan speed:  60     temp:  50.147
 fan speed:  64     temp:  50.634   
 ```
 
-run container interactive
+### run container interactive
 ```
-# podman run -it --rm --name gpioexperiment --device=/dev/gpiochip0 localhost/gpio /bin/bash
+# sudo podman run -it --rm --name gpioexperiment --device=/dev/gpiochip0 localhost/gpio /bin/bash
 
 [root@074737ba6639 /]# /src/fan.py --help
 
 fan.py [--min-temp=40] [--max-temp=70] [--fan-low=20] [--fan-high=100] [--wait-time=1] [--pwm-gpio=18] [--pwm-freq=10000] [--node-exporter] [-v|--verbose] [-h|--help]
 ```
 
+### run container with node-exporter
 run container with fan.py and node-exporter metrics (text file collector) for prometheus as a daemon (non interactive):
 ```
-# podman run -d --rm --name raspberryfan -v /var/lib/node_exporter:/var/lib/node_exporter:z --device=/dev/gpiochip0 localhost/gpio /usr/bin/python /src/fan.py --node-exporter
+# sudo podman run -d --rm --name raspberryfan -v /var/lib/node_exporter:/var/lib/node_exporter:z --device=/dev/gpiochip0 localhost/gpio /usr/bin/python /src/fan.py --node-exporter
 ```
 note: be sure you have node exporter installed. Metrics will be written in /var/lib/node_exporter
+
+### run container using systemd
+note: remove the node-exporter lines from 'raspberryfan.service' if not needed.
+```
+# sudo cp raspberryfan.service /etc/systemd/system/raspberryfan.service
+# sudo mkdir /var/lib/node-exporter
+# sudo systemctl enable raspberryfan.service
+# sudo systemctl start raspberryfan.service
+# sudo systemctl status raspberryfan.service
+```
+view node-exporter metrics:
+```
+# sudo tail -f /var/lib/node_exporter/fan-metrics.prom
+```
 
 ## Fan metrics using node-exporter, prometheus and grafana
 
 When the --node-exporter parameter is used, the fan.py script writes the following metrics every interval in /var/lib/node_exporter/fan-metrics.prom:
 ```
-[root@fed127 ~]# cat  /var/lib/node_exporter/fan-metrics.prom 
+# sudo cat  /var/lib/node_exporter/fan-metrics.prom 
 raspberry_fan_speed  68.0
 raspberry_fan_temp  52.095
 raspberry_fan_min_temp  40
