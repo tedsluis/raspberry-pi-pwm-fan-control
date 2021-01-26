@@ -73,7 +73,11 @@ localhost/gpio                     latest  62f18d7517ca  6 hours ago   926 MB
 
 ### run container with fan.py 
 ```
-# sudo podman run -it --rm --name gpioexperiment --device=/dev/gpiochip0 localhost/gpio /usr/bin/python /src/fan.py --verbose
+# sudo podman run -it --rm --name gpioexperiment \
+                           --device=/dev/gpiochip0 \
+                           localhost/gpio \
+                           /usr/bin/python /src/fan.py \
+                           --verbose
                                                                                                                                                                                                                                               
 MIN_TEMP: 40                    
 MAX_TEMP: 60                    
