@@ -6,7 +6,7 @@ Wants=network.target
 
 # notes: 
 # replace 'podman' for 'docker' if needed.
-# create /var/lib/node_exporter for node-exporter of remove '-v /var/lib/node_exporter:/var/lib/node_exporter:z' and '--node-exporter' below.
+# create /var/lib/node_exporter directory for node-exporter or remove '-v /var/lib/node_exporter:/var/lib/node_exporter:z' and '--node-exporter' below.
  
 [Service]
 Restart=on-failure
