@@ -6,7 +6,7 @@ High lights:
 * Support for Fedora 32+ and other linux distros the uses a new linux kernel.
 * Support for kernels that does not use the lagecy interface /sys/class/gpio anymore.
 * Uses Python modules which provide functionality via the /dev/gpiochip interface.
-* Easy to setup, running in a container using podman (or docker).
+* Easy to setup, running in a container using podman or docker.
 
 Since the raspberry pi 4 was released, a fan to cool down the board became more common. I tried lots of fans and they all make some noice. If you have a couple of raspberries, all these fans will produce to much noice. In such a case it is very usefull to dynamicly control the fan speed, so it will cool faster when the cpu gets hotter and (most important) slow down when it is not needed.
 
@@ -16,9 +16,9 @@ To do so you can use a cooling fan with PWM ([Pulse Width Modulation](https://en
 * black: GND
 * blue: PWM
 
+The official raspberry fan adda ad0205dx-k59 (30mm x 30mm) mounted in a 3d printed holder so it fits like a 40mx40m fan.
 [![fan in holder raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-in-holder.png)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-in-holder.png)
 [![fan and holder raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-and-holder.png)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-and-holder.png)
-
 
 PWM uses the width of the pulses to control the average voltage. Small pulses reduces the duty-cycle. Width pulses increases the duty-cycle.
 ```
@@ -44,9 +44,11 @@ The duty-cycle can be calculated using:
 
 The PWM (hardware controlled) signal can be generated on GPIO 12/13/18/19. However there are only two channels, so only two different PWM streams can be generated at a time. GPIO 12/18 are on one channel, GPIO 13/19 on the other. More info: https://www.raspberrypi.org/documentation/usage/gpio/
 
-Note: Serveral Linux distros, like Fedora 32+ are already compiled without the legacy interface, so there’s no /sys/class/gpio on the system. Common gpio python modules like RPi.GPIO won't work anymore. This repo uses a new character device /dev/gpiochipN provided by the upstream kernel. This is the current way of interacting with GPIO.
+Note: Unlike Raspbios, several Linux distros, like Fedora 32+, are already compiled without the legacy interface, so there’s no /sys/class/gpio on the system. Common gpio python modules like RPi.GPIO won't work anymore. This repo uses the new character device interface /dev/gpiochipN provided by the upstream kernel. This is the current way of interacting with GPIO.
 
-The fan.py script in this repo is created bij others, but uses different python modules, which are capable of using the new /dev/gpiochipN interface in the Linux kernel. I all runs in a container, so it can run on any raspberry pi Linux distro.
+The fan.py script in this repo is created by https://github.com/DriftKingTW/Raspberry-Pi-PWM-Fan-Control, but uses different python modules, which are capable of using the new /dev/gpiochipN interface in the Linux kernel. It runs in a container, so it can run on any raspberry pi Linux distro with Podman or Docker. 
+
+[Podman](https://podman.io/) and Docker are interchangeable. Every where you see 'podman' or 'docker', you can use the other. They have exactly the same command line parameters. However, Podman is more save and does not need a daemon. Read [here](https://podman.io/whatis.html) why you should use Podman over Docker.
 
 ## build container image
 
@@ -64,7 +66,6 @@ Build contaner image that includes:
 REPOSITORY                         TAG     IMAGE ID      CREATED       SIZE
 localhost/gpio                     latest  62f18d7517ca  6 hours ago   926 MB
 ``` 
-[Podman](https://podman.io/) and Docker are interchangeable. Every where you see Podman or Docker, you can use the other. Read [here](https://podman.io/whatis.html) why you should use Podman over Docker.
 
 ## run container
 
@@ -177,9 +178,8 @@ Multiple pulse settings may be queued in this way.
 
 Not needed for the fan.py script, nevertheless intresting to experiment with.
 
+* https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git/tree/README
 * https://fedoramagazine.org/turnon-led-fedora-iot/
-* https://www.acmesystems.it/gpiod
-* https://github.com/brgl/libgpiod/tree/master/bindings/python/examples
 
 ### gpiod cli
 ```
