@@ -44,7 +44,7 @@ The duty-cycle can be calculated using:
 
 The PWM (hardware controlled) signal can be generated on GPIO 12/13/18/19. However there are only two channels, so only two different PWM streams can be generated at a time. GPIO 12/18 are on one channel, GPIO 13/19 on the other. More info: https://www.raspberrypi.org/documentation/usage/gpio/
 
-Note: Unlike Raspbios, several Linux distros, like Fedora 32+, are already compiled without the legacy interface, so there’s no /sys/class/gpio on the system. Common gpio python modules like RPi.GPIO won't work anymore. This repo uses the new character device interface /dev/gpiochipN provided by the upstream kernel. This is the current way of interacting with GPIO.
+Note: Unlike Raspios, several Linux distros, like Fedora 32+, are already compiled without the legacy interface, so there’s no /sys/class/gpio on the system. Common gpio python modules like RPi.GPIO won't work anymore. This repo uses the new character device interface /dev/gpiochipN provided by the upstream kernel. This is the current way of interacting with GPIO.
 
 The fan.py script in this repo is created by https://github.com/DriftKingTW/Raspberry-Pi-PWM-Fan-Control, but uses different python modules, which are capable of using the new /dev/gpiochipN interface in the Linux kernel. It runs in a container, so it can run on any raspberry pi Linux distro with Podman or Docker. 
 
@@ -98,13 +98,20 @@ fan speed:  64     temp:  50.634
 
 [root@074737ba6639 /]# /src/fan.py --help
 
-fan.py [--min-temp=40] [--max-temp=70] [--fan-low=20] [--fan-high=100] [--wait-time=1] [--pwm-gpio=18] [--pwm-freq=10000] [--node-exporter] [-v|--verbose] [-h|--help]
+fan.py [--min-temp=40] [--max-temp=70] [--fan-low=20] [--fan-high=100] [--wait-time=1] 
+       [--pwm-gpio=18] [--pwm-freq=10000] [--node-exporter] [-v|--verbose] [-h|--help]
 ```
 
 ### run container with node-exporter
 run container with fan.py and node-exporter metrics (text file collector) for prometheus as a daemon (non interactive):
 ```
-# sudo podman run -d --rm --name raspberryfan -v /var/lib/node_exporter:/var/lib/node_exporter:z --device=/dev/gpiochip0 localhost/gpio /usr/bin/python /src/fan.py --node-exporter
+# sudo mkdir /var/lib/node_exporter
+# sudo podman run -d --rm --name raspberryfan \
+                          -v /var/lib/node_exporter:/var/lib/node_exporter:z \
+                          --device=/dev/gpiochip0 \
+                          localhost/gpio \
+                          /usr/bin/python /src/fan.py \
+                          --node-exporter
 ```
 note: be sure you have node exporter installed. Metrics will be written in /var/lib/node_exporter
 
