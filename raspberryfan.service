@@ -1,0 +1,35 @@
+
+[Unit]
+Description=raspberry pwm fan control
+After=network-online.target
+Wants=network.target
+
+# notes: 
+# replace 'podman' for 'docker' if needed.
+# create /var/lib/node_exporter for node-exporter of remove '-v /var/lib/node_exporter:/var/lib/node_exporter:z' and '--node-exporter' below.
+ 
+[Service]
+Restart=on-failure
+RestartSec=10s
+ExecStartPre=-/usr/bin/podman rm raspberryfan
+ExecStart=/usr/bin/podman run --name=raspberryfan \
+                              -v /var/lib/node_exporter:/var/lib/node_exporter:z \
+                              --device=/dev/gpiochip0 \
+                              --restart unless-stopped \
+                              localhost/gpio \
+                              /usr/bin/python /src/fan.py \
+                              --node-exporter \
+                              --min-temp=40 \
+                              --max-temp=70 \
+                              --fan-low=20 \
+                              --fan-high=100 \
+                              --wait-time=10 \
+                              --pwm-gpio=18 \
+                              --pwm-freq=10000 
+
+ExecStop=-/usr/bin/podman stop -t 2 raspberryfan
+ExecStopPost=/usr/bin/podman rm raspberryfan
+
+[Install]
+WantedBy=multi-user.target
+
