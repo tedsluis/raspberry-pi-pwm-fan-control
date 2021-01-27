@@ -47,7 +47,7 @@ The PWM (hardware controlled) signal can be generated on GPIO 12/13/18/19. Howev
 
 Note: Unlike Raspios, several Linux distros, like Fedora 32+, are already compiled without the legacy interface, so there’s no /sys/class/gpio on the system. Common gpio python modules like RPi.GPIO won't work anymore. This repo uses the new character device interface /dev/gpiochipN provided by the upstream kernel. This is the current way of interacting with GPIO.
 
-The fan.py script in this repo is created by https://github.com/DriftKingTW/Raspberry-Pi-PWM-Fan-Control, but uses different python modules, which are capable of using the new /dev/gpiochipN interface in the Linux kernel. It runs in a container, so it can run on any raspberry pi Linux distro with Podman or Docker. 
+The fan.py script in this repo was original created by https://github.com/DriftKingTW/Raspberry-Pi-PWM-Fan-Control, but it now uses a different python module, which are capable of using the new /dev/gpiochipN interface in the Linux kernel. It runs in a container, so it can run on any raspberry pi Linux distro with Podman or Docker. 
 
 [Podman](https://podman.io/) and Docker are interchangeable. Every where you see 'podman' or 'docker', you can use the other. They have exactly the same command line parameters. However, Podman is more save and does not need a daemon. Read [here](https://podman.io/whatis.html) why you should use Podman over Docker.
 
