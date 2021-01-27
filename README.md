@@ -2,7 +2,8 @@
 
 High lights:
 
-* Dynamic PWM fan control for raspberry, based on cpu temperature.
+* Dynamic PWM fan speed control for raspberry, based on cpu temperature.
+* a python script [fan.py](https://github.com/tedsluis/raspberry-pi-pwm-fan-control/blob/main/fan.py), using python module [lgpio](https://github.com/joan2937/lg/) for PWM.
 * Support for Fedora 32+ and other linux distros the uses a new linux kernel.
 * Support for kernels that does not use the lagecy interface /sys/class/gpio anymore.
 * Uses Python modules which provide functionality via the /dev/gpiochip interface.
@@ -52,12 +53,12 @@ The fan.py script in this repo is created by https://github.com/DriftKingTW/Rasp
 
 ## build container image
 
-Build contaner image that includes:
+Build a container image that includes:
 
 * gpiod cli
 * gpiod python module
 * lgpio & rgpio python modules
-* fan.py, the python script that will control the fan speed (it only needs the lgpio python module).
+* [fan.py]9https://github.com/tedsluis/raspberry-pi-pwm-fan-control/blob/main/fan.py), the python script that will control the fan speed (it only needs the lgpio python module).
 
 ```
 # git clone https://github.com/tedsluis/raspberry-pi-pwm-fan-control.git
@@ -120,7 +121,7 @@ run container with fan.py and node-exporter metrics (text file collector) for pr
 note: be sure you have node exporter installed. Metrics will be written in /var/lib/node_exporter
 
 ### run container using systemd
-note: remove the node-exporter lines from 'raspberryfan.service' if not needed.
+note: remove the node-exporter lines from '[raspberryfan.service](https://github.com/tedsluis/raspberry-pi-pwm-fan-control/blob/main/raspberryfan.service)' if not needed.
 ```
 # sudo cp raspberryfan.service /etc/systemd/system/raspberryfan.service
 # sudo mkdir /var/lib/node-exporter
@@ -137,7 +138,7 @@ view node-exporter metrics:
 
 When the --node-exporter parameter is used, the fan.py script writes the following metrics every interval in /var/lib/node_exporter/fan-metrics.prom:
 ```
-# sudo cat  /var/lib/node_exporter/fan-metrics.prom 
+# sudo tail -f  /var/lib/node_exporter/fan-metrics.prom 
 raspberry_fan_speed  68.0
 raspberry_fan_temp  52.095
 raspberry_fan_min_temp  40
@@ -154,7 +155,7 @@ The fan speed follows the cpu temperature. The fan keeps the cpu below 65 celciu
 
 ## lgpio & rgpio
 
-I came across the lgpio python module and I found exactly what I needed to control the raspberry fan: tx_pwm
+I came across the [lgpio](https://github.com/joan2937/lg) python module and I found exactly what I needed to control the raspberry fan: [tx_pwm](http://abyz.me.uk/lg/py_lgpio.html#tx_pwm)
 
 * lgpio allows control of a local Pi's GPIO, i.e. it is like RPi.GPIO and RPIO.GPIO. It is auto-generated from a C library using SWIG.
 * rgpio allows control of local and remote Pi's GPIO, i.e. it is like pigpio. Like pigpio it also uses a client server module.
@@ -204,7 +205,8 @@ Multiple pulse settings may be queued in this way.
 
 ## gpiod
 
-Not needed for the fan.py script, nevertheless intresting to experiment with.
+Not needed for the fan.py script, nevertheless intresting to experiment with, since it supports the new character device interface /dev/gpiochipN in the linux kernel. 
+It is part of the linux kernel, but it does not support PWM.
 
 * https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git/tree/README
 * https://fedoramagazine.org/turnon-led-fedora-iot/
