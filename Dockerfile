@@ -10,7 +10,8 @@ RUN  mkdir -p /tmp; \
      make; \
      make install
 
-RUN  cp /usr/local/lib/lib*gpio.so.1 /usr/lib64/
+RUN  if [[ -d "/usr/lib64" ]]; then cp /usr/local/lib/lib*gpio.so.1 /usr/lib64/; fi
+RUN  if [[ -d "/usr/lib" ]];   then cp /usr/local/lib/lib*gpio.so.1 /usr/lib/;   fi
 
 RUN  mkdir /src
 
