@@ -4,10 +4,11 @@ High lights:
 
 * Dynamic PWM fan speed control for raspberry, based on cpu temperature.
 * a python script [fan.py](https://github.com/tedsluis/raspberry-pi-pwm-fan-control/blob/main/fan.py), using python module [lgpio](https://github.com/joan2937/lg/) for PWM.
-* Support for Fedora 32+ and other linux distros the uses a new linux kernel.
+* Support for Fedora 32/33 and other linux distros the uses a new linux kernel.
 * Support for kernels that does not use the lagecy interface /sys/class/gpio anymore.
 * Uses Python modules which provide functionality via the /dev/gpiochip interface.
 * Easy to setup, running in a container using podman or docker.
+* Runs on raspberry 32bit and 64bit, tested on raspberry 2B, 3B+ and 4B (4GB/8GB model)
 
 Since the raspberry pi 4 was released, a fan to cool down the board became more common. I tried lots of fans and they all make some noice. If you have a couple of raspberries, all these fans will produce to much noice. In such a case it is very usefull to dynamicly control the fan speed, so it will cool faster when the cpu gets hotter and (most important) slow down when it is not needed.
 
@@ -17,7 +18,7 @@ To do so you can use a cooling fan with PWM ([Pulse Width Modulation](https://en
 * black: GND
 * blue: PWM
 
-The official raspberry fan adda ad0205dx-k59 (30mm x 30mm) mounted in a 3d printed holder so it fits like a 40mx40m fan.
+The [official raspberry fan](https://www.raspberrypi.org/products/raspberry-pi-4-case-fan/) adda ad0205dx-k59 (30mm x 30mm) mounted in a 3d printed holder so it fits like a 40mx40m fan.
 [![fan in holder raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-in-holder.png)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-in-holder.png)
 [![fan and holder raspberry](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-and-holder.png)](https://raw.githubusercontent.com/tedsluis/raspberry-pi-pwm-fan-control/main/images/fan-and-holder.png)
 
