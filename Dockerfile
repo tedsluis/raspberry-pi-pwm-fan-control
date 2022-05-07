@@ -1,12 +1,12 @@
-FROM fedora:latest
+FROM fedora:36-armhfp
 
 RUN  dnf -y update
-RUN  dnf -y install libgpiod-utils python3-libgpiod swig python2 python2-setuptools python-setuptools python-devel python3-devel python-setuptools python3-setuptools unzip curl wget make gcc which
+RUN  dnf -y install libgpiod-utils python3-libgpiod swig python2 python-setuptools python-devel python3-devel python-setuptools python3-setuptools unzip curl wget make gcc which git
 
 RUN  mkdir -p /tmp; \
-     wget https://github.com/joan2937/lg/archive/master.zip;  \
-     unzip master.zip; \
-     cd lg-master; \
+     git clone https://github.com/joan2937/lg; \
+     cd lg; \
+     git checkout 37b1afc59a8ddbce9b1f6e14a8f81f1995cd1dc0; \
      make; \
      make install
 
@@ -19,4 +19,3 @@ COPY fan.py /src
 
 RUN  mkdir -p /var/lib/node_exporter; \
      touch /var/lib/node_exporter/fan-metrics.prom
-
