@@ -17,7 +17,7 @@ ExecStart=/usr/bin/podman run --name=raspberryfan \
                               --device=/dev/gpiochip0 \
                               --restart unless-stopped \
                               localhost/gpio \
-                              /usr/bin/python /src/fan.py \
+                              /usr/bin/python3 /src/fan.py \
                               --node-exporter \
                               --min-temp=40 \
                               --max-temp=70 \

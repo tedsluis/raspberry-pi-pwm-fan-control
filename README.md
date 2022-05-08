@@ -78,7 +78,7 @@ localhost/gpio                     latest  62f18d7517ca  6 hours ago   926 MB
 # sudo podman run -it --rm --name gpioexperiment \
                            --device=/dev/gpiochip0 \
                            localhost/gpio \
-                           /usr/bin/python /src/fan.py \
+                           /usr/bin/python3 /src/fan.py \
                            --verbose
                                                                                                                                                                                                                                               
 MIN_TEMP: 40                    
@@ -116,7 +116,7 @@ run container with fan.py and node-exporter metrics (text file collector) for pr
                           -v /var/lib/node_exporter:/var/lib/node_exporter:z \
                           --device=/dev/gpiochip0 \
                           localhost/gpio \
-                          /usr/bin/python /src/fan.py \
+                          /usr/bin/python3 /src/fan.py \
                           --node-exporter
 ```
 note: be sure you have node exporter installed. Metrics will be written in /var/lib/node_exporter
