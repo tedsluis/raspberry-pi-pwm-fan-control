@@ -15,7 +15,5 @@ RUN  if [[ -d "/usr/lib" ]];   then cp /usr/local/lib/lib*gpio.so.1 /usr/lib/;  
 
 RUN  mkdir /src
 
-COPY fan.py /src
-
 RUN  mkdir -p /var/lib/node_exporter; \
      touch /var/lib/node_exporter/fan-metrics.prom

@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  gpioexperiment:
+    image: gpio
+    build: .
+    container_name: gpio_experiment
+    restart: unless-stopped
+    volumes:
+      - type: bind
+        source: ./fan.py
+        target: /src/fan.py
+    command: /usr/bin/python3 -u /src/fan.py --verbose
+    devices:
+      - /dev/gpiochip0
+
