@@ -135,6 +135,18 @@ view node-exporter metrics:
 # sudo tail -f /var/lib/node_exporter/fan-metrics.prom
 ```
 
+## build image and run container with docker compose
+
+An example to simply run the fan.py script can be found in `docker-compose.yaml`. To run it, type:
+```
+# docker compose up -d
+```
+
+Check the script output with:
+```
+# docker compose logs -f --tail 10`
+```
+
 ## Fan metrics using node-exporter, prometheus and grafana
 
 When the --node-exporter parameter is used, the fan.py script writes the following metrics every interval in /var/lib/node_exporter/fan-metrics.prom:
