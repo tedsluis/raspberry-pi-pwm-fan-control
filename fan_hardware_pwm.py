@@ -77,7 +77,7 @@ def getCpuTemperature():
 
 # Set fan speed
 def setFanSpeed(speed,temp):
-    pwm.change_frequency(speed)
+    pwm.change_duty_cycle(speed)
 
     # print fan speed and temperature
     if VERBOSE == 1:
